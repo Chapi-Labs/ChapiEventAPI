@@ -1,4 +1,5 @@
 const User = require('./user.model');
+const bcrypt = require('bcryptjs');
 
 /**
  * Load user and append to req.
@@ -27,8 +28,11 @@ function get(req, res) {
  * @returns {User}
  */
 async function create(req, res, next) {
+  const hashPassword = await bcrypt.hash(req.body.password, 10);
+
   const user = new User({
     email: req.body.email,
+    password: hashPassword,
     first_name: req.body.first_name,
     last_name: req.body.last_name
   });
