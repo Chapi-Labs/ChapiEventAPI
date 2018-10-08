@@ -3,6 +3,12 @@ const bcrypt = require('bcryptjs');
 const httpStatus = require('http-status');
 const config = require('../../config/config');
 const jwt = require('jsonwebtoken');
+
+const errorMessage = {
+  message: 'UserNotFoundException',
+  errmsg: 'Authentication error'
+};
+
 /**
  * Load user and append to req.
  */
@@ -58,22 +64,24 @@ const login = async (req, res) => {
     const user = await User.findOne({
       email: req.body.email.toLowerCase()
     });
-    // compare hashed password
-    const valid = await bcrypt.compare(req.body.password, user.password);
-    // if the password is a match
-    if (valid === true) {
-      // create a signed token
-      const token = jwt.sign(
-        {
-          email: user.email,
-          id: user.id
-        },
-        config.jwtSecret,
-        {
-          expiresIn: '30 days'
-        }
-      );
-      return res.json({ token, username: user.username, id: user.id });
+    if (!user) {
+      // compare hashed password
+      const valid = await bcrypt.compare(req.body.password, user.password);
+      // if the password is a match
+      if (valid === true) {
+        // create a signed token
+        const token = jwt.sign(
+          {
+            email: user.email,
+            id: user.id
+          },
+          config.jwtSecret,
+          {
+            expiresIn: '30 days'
+          }
+        );
+        return res.json({ token, username: user.username, id: user.id });
+      }
     }
     // password not valid
     return res.status(httpStatus.UNAUTHORIZED).json(errorMessage);
