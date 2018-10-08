@@ -64,7 +64,7 @@ const login = async (req, res) => {
     const user = await User.findOne({
       email: req.body.email.toLowerCase()
     });
-    if (!user) {
+    if (user != null) {
       // compare hashed password
       const valid = await bcrypt.compare(req.body.password, user.password);
       // if the password is a match
