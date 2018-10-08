@@ -8,7 +8,7 @@ module.exports = {
       last_name: Joi.string().required(),
       email: Joi.string()
         .regex(/^([\w-.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})$/)
-        .required().
+        .required(),
       password: Joi.string().required(),
     }
   },
