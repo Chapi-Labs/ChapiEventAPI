@@ -19,7 +19,8 @@ router.route('/:userId')
   /** PUT /api/users/:userId - Update user */
   .put(validate(paramValidation.updateUser), userCtrl.update)
 
-
+request.route('/login')
+  .post(validate(paramValidation.login), userCtrl.login);
 /** Load user when API with userId route parameter is hit */
 router.param('userId', userCtrl.load);
 
