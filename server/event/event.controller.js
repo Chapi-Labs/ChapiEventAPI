@@ -37,8 +37,8 @@ async function create(req, res, next) {
  * @returns {Event[]}
  */
 function list(req, res, next) {
-  const { limit = 50, skip = 0 } = req.query;
-  Event.list({ limit, skip })
+  const { limit = 50, skip = 0, day = 1 } = req.query;
+  Event.list({ limit, skip, day })
     .then(events => res.json(events))
     .catch(e => next(e));
 }

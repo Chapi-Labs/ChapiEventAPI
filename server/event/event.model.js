@@ -74,9 +74,9 @@ EventSchema.statics = {
    * @param {number} limit - Limit number of users to be returned.
    * @returns {Promise<User[]>}
    */
-  list({ skip = 0, limit = 50 } = {}) {
-    return this.find()
-      .sort({ createdAt: -1 })
+  list({ skip = 0, limit = 50, day = 1 } = {}) {
+    return this.find({ day })
+      .sort({ hour: -1 })
       .skip(+skip)
       .limit(+limit)
       .exec();
