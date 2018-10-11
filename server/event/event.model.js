@@ -7,11 +7,19 @@ const APIError = require('../helpers/APIError');
  * Event Schema
  */
 const EventSchema = new mongoose.Schema({
+  _id: {
+    type: Number,
+    required: true,
+  },
   name: {
     type: String,
     required: true
   },
-  order: {
+  day: {
+    type: Number,
+    required: true,
+  },
+  hour: {
     type: Number,
     required: true,
   },
