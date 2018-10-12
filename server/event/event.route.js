@@ -5,7 +5,7 @@ const eventCtrl = require('./event.controller');
 
 const router = express.Router(); // eslint-disable-line new-cap
 
-router.route('/list')
+router.route('/')
   /** GET /api/events - Get list of events */
   .get(eventCtrl.list)
 
