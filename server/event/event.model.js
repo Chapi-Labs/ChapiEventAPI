@@ -76,7 +76,7 @@ EventSchema.statics = {
    */
   list({ skip = 0, limit = 50, day = 1 } = {}) {
     return this.find({ day })
-      .sort({ hour: -1 })
+      .sort({ hour: 1 })
       .skip(+skip)
       .limit(+limit)
       .exec();
