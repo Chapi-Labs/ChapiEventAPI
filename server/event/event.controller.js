@@ -42,9 +42,9 @@ async function list(req, res, next) {
     const events = await Event.list({limit, skip, day });
     const map = new Map();
     events.forEach((event) => {
-      const entry = map.get(event.hour);
+      const entry = map.get(event.hour_description);
       if (!entry) {
-        map.set(event.hour, [event]);
+        map.set(event.hour_description, [event]);
       } else {
         entry.push(event);
       }
