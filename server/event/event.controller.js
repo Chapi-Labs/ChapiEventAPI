@@ -36,11 +36,30 @@ async function create(req, res, next) {
  * @property {number} req.query.limit - Limit number of users to be returned.
  * @returns {Event[]}
  */
-function list(req, res, next) {
+async function list(req, res, next) {
   const { limit = 50, skip = 0, day = 1 } = req.query;
-  Event.list({ limit, skip, day })
-    .then(events => res.json(events))
-    .catch(e => next(e));
+  try {
+    const events = await Event.list({limit, skip, day });
+    const map = new Map();
+    events.forEach((event) => {
+      const entry = map.get(event.hour);
+      if (!entry) {
+        map.set(event.hour, [event]);
+      } else {
+        entry.push(event);
+      }
+    });
+    const result = [];
+    map.forEach((value, key) => {
+      result.push({
+        events: value,
+        hour: key,
+      });
+    });
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
 }
 
 module.exports = { get, create, list };
