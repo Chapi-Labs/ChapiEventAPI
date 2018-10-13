@@ -19,9 +19,11 @@ async function get(req, res) {
 async function create(req, res, next) {
   const event = new Event({
     name: req.body.name,
-    order: req.body.order,
     description: req.body.description,
-    hour_description: req.body.hour_description
+    hour: req.body.hour,
+    hour_description: req.body.hour_description,
+    day: req.body.day,
+    qr: req.body.qr
   });
   event.save()
   .then(savedEvent => res.json(savedEvent))

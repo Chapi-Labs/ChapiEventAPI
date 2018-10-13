@@ -43,7 +43,7 @@
   "dependencies": {
     "bcryptjs": "false2.4.3",
     "bluebird": "3.5.1",
-    "body-parser": "1.18.2",
+    "body-parser": "^1.18.2",
     "compression": "1.7.2",
     "cookie-parser": "1.4.3",
     "cors": "2.8.4",
@@ -59,6 +59,8 @@
     "jsonwebtoken": "7.1.9",
     "method-override": "^2.3.10",
     "mongoose": "4.7.4",
+    "mongoose-auto-increment": "false5.0.1",
+    "mongoose-plugin-autoinc": "false1.1.9",
     "morgan": "1.9.0",
     "nanoid": "false1.2.6",
     "pm2": "false3.2.2",

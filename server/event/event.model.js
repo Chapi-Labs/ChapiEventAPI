@@ -2,14 +2,14 @@ const Promise = require('bluebird');
 const mongoose = require('mongoose');
 const httpStatus = require('http-status');
 const APIError = require('../helpers/APIError');
-
+const { autoIncrement } = require('mongoose-plugin-autoinc');
 /**
  * Event Schema
  */
 const EventSchema = new mongoose.Schema({
   _id: {
     type: Number,
-    required: true,
+    required: false,
   },
   name: {
     type: String,
@@ -30,6 +30,11 @@ const EventSchema = new mongoose.Schema({
   hour_description: {
     type: String,
     required: false,
+  },
+  qr: {
+    type: Boolean,
+    required: true,
+    default: false,
   }
 });
 
@@ -86,4 +91,5 @@ EventSchema.statics = {
 /**
  * @typedef User
  */
+EventSchema.plugin(autoIncrement, 'Event');
 module.exports = mongoose.model('Event', EventSchema);

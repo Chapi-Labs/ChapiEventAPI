@@ -12,7 +12,16 @@ module.exports = {
       password: Joi.string().required(),
     }
   },
-
+  createEvent: {
+    body: {
+      name: Joi.string().required(),
+      day: Joi.number().required(),
+      hour: Joi.number().required(),
+      description: Joi.string(),
+      hour_description: Joi.string().required(),
+      qr: Joi.boolean()
+    }
+  },
   // UPDATE /api/users/:userId
   updateUser: {
     body: {
