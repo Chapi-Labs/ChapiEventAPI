@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 
 const errorMessage = {
   message: 'UserNotFoundException',
-  errmsg: 'Authentication error'
+  errmsg: 'El usuario o la contraseña no coinciden'
 };
 
 /**
