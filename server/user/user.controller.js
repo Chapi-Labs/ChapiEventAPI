@@ -36,11 +36,9 @@ function get(req, res) {
  * @returns {User}
  */
 async function create(req, res, next) {
-  const hashPassword = await bcrypt.hash(req.body.password, 10);
 
   const user = new User({
     email: req.body.email,
-    password: hashPassword,
     first_name: req.body.first_name,
     last_name: req.body.last_name
   });
@@ -65,10 +63,6 @@ const login = async (req, res) => {
       email: req.body.email.toLowerCase()
     });
     if (user != null) {
-      // compare hashed password
-      const valid = await bcrypt.compare(req.body.password, user.password);
-      // if the password is a match
-      if (valid === true) {
         // create a signed token
         const token = jwt.sign(
           {
@@ -80,7 +74,7 @@ const login = async (req, res) => {
             expiresIn: '30 days'
           }
         );
-        return res.json({ token, username: user.username, id: user.id });
+        return res.json({ token, username: `${user.first_name} ${user.last_name}`, id: user.id });
       }
     }
     // password not valid

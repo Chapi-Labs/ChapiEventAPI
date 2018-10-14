@@ -9,7 +9,6 @@ module.exports = {
       email: Joi.string()
         .regex(/^([\w-.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})$/)
         .required(),
-      password: Joi.string().required(),
     }
   },
   createEvent: {
@@ -41,7 +40,6 @@ module.exports = {
   login: {
     body: {
       email: Joi.string().required(),
-      password: Joi.string().required()
     }
   }
 };
