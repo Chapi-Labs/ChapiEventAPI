@@ -13,21 +13,52 @@ const UserSchema = new mongoose.Schema({
   },
   last_name: {
     type: String,
-    required: true,
+    required: true
   },
   email: {
     type: String,
     required: true,
-    unique: true,
+    unique: true
   },
   password: {
     type: String,
-    required: true,
+    required: true
   },
   createdAt: {
     type: Date,
     default: Date.now
-  }
+  },
+  events_attended: [{
+    _id: {
+      type: Number,
+      ref: 'Event'
+    },
+    name: {
+      type: String,
+      required: true
+    },
+    day: {
+      type: Number,
+      required: true,
+    },
+    hour: {
+      type: Number,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: false,
+    },
+    hour_description: {
+      type: String,
+      required: false,
+    },
+    qr: {
+      type: Boolean,
+      required: true,
+      default: false,
+    }
+  }]
 });
 
 /**

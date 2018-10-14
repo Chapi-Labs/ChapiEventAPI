@@ -1,5 +1,5 @@
 const Event = require('./event.model');
-
+const User = require('../user/user.model');
 
 /**
  * Get user
@@ -31,6 +31,30 @@ async function create(req, res, next) {
 
 }
 
+
+async function addEvent(req, res) {
+  try {
+    const [event, user] = await Promise.all([
+      Event.get(req.body.id),
+      User.findOne({ email: req.body.email})
+    ]);
+    user.events_attended.push(event);
+    await user.save();
+    res.json({ valid: true});
+  } catch (error) {
+    res.json({ valid: false });
+  }
+}
+
+async function verifyEvent(req, res) {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    const index = user.events_attended.findIndex(event => event._id === req.body.eventId);
+    res.json({ valid: index === -1 });
+  } catch (error) {
+    res.json({ valid: false, error: 'error verificando' });
+  }
+}
 
 /**
  * Get event list.
@@ -64,4 +88,4 @@ async function list(req, res, next) {
   }
 }
 
-module.exports = { get, create, list };
+module.exports = { get, create, list, addEvent, verifyEvent };

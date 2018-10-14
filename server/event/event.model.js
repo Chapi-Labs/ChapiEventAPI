@@ -67,7 +67,7 @@ EventSchema.statics = {
         if (event) {
           return event;
         }
-        const err = new APIError('El usuario no existe!', httpStatus.NOT_FOUND);
+        const err = new APIError('El evento no existe!', httpStatus.NOT_FOUND);
         return Promise.reject(err);
       });
   },

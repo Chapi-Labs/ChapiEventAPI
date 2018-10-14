@@ -12,9 +12,11 @@ router.route('/')
   /** POST /api/events - Create new user */
   .post(eventCtrl.create);
 
-router.route('/:eventId')
-  /** GET /api/events/:userId - Get user */
-  .get(eventCtrl.get)
+router.route('/add/event')
+  /** POST /api/events/:userId - Get user */
+  .post(eventCtrl.addEvent)
+router.route('/verify/event')
+  .post(eventCtrl.verifyEvent);
 
 
 module.exports = router;
