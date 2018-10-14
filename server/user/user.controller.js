@@ -74,9 +74,8 @@ const login = async (req, res) => {
             expiresIn: '30 days'
           }
         );
-        return res.json({ token, username: `${user.first_name} ${user.last_name}`, id: user.id });
+        return res.json({ token, username: `${user.first_name} ${user.last_name}P`, id: user.id });
       }
-    }
     // password not valid
     return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(errorMessage);
   } catch (e) {
