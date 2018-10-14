@@ -50,7 +50,14 @@ async function verifyEvent(req, res) {
   try {
     const user = await User.findOne({ email: req.body.email });
     const index = user.events_attended.findIndex(event => event._id === req.body.eventId);
-    res.json({ valid: index === -1 });
+    const valid = index === -1;
+    if (valid) {
+       const event = await Event.get(req.body.id);
+       user.events_attended.push(event);
+       await user.save();
+       return res.json({ valid: true });
+    }
+    res.json({ valid });
   } catch (error) {
     res.json({ valid: false, error: 'error verificando' });
   }
