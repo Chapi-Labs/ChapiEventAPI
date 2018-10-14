@@ -84,10 +84,10 @@ const login = async (req, res) => {
       }
     }
     // password not valid
-    return res.status(httpStatus.UNAUTHORIZED).json(errorMessage);
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(errorMessage);
   } catch (e) {
     // check if user was found by username
-    return res.status(httpStatus.UNAUTHORIZED).json(errorMessage);
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(errorMessage);
   }
 };
 
