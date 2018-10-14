@@ -15,7 +15,7 @@ router.route('/')
 router.route('/add/event')
   /** POST /api/events/:userId - Get user */
   .post(eventCtrl.addEvent)
-router.route('/verify/event')
+router.route('/verify')
   .post(eventCtrl.verifyEvent);
 
 
