@@ -25,7 +25,8 @@ function login(req, res, next) {
     }, config.jwtSecret);
     return res.json({
       token,
-      username: user.username
+      username: user.username,
+      email: user.email,
     });
   }
 
