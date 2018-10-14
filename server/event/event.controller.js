@@ -49,7 +49,7 @@ async function addEvent(req, res) {
 async function verifyEvent(req, res) {
   try {
     const user = await User.findOne({ email: req.body.email });
-    const index = user.events_attended.findIndex(event => event._id === req.body.eventId);
+    const index = user.events_attended.findIndex(event => event._id === req.body.event_id);
     const valid = index === -1;
     if (valid) {
        const event = await Event.get(req.body.id);
