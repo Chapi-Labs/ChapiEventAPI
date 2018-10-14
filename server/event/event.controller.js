@@ -52,7 +52,7 @@ async function verifyEvent(req, res) {
     const index = user.events_attended.findIndex(event => event._id === req.body.event_id);
     const valid = index === -1;
     if (valid) {
-       const event = await Event.get(req.body.id);
+       const event = await Event.get(req.body.event_id);
        user.events_attended.push(event);
        await user.save();
        return res.json({ valid: true });
