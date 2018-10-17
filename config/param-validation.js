@@ -9,7 +9,14 @@ module.exports = {
       email: Joi.string()
         .regex(/^([\w-.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})$/)
         .required(),
-    }
+    },
+  },
+  createEmail: {
+    body: {
+      email: Joi.string()
+        .regex(/^([\w-.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})$/)
+        .required(),
+    },
   },
   createEvent: {
     body: {
@@ -19,7 +26,7 @@ module.exports = {
       description: Joi.string(),
       hour_description: Joi.string().required(),
       qr: Joi.boolean()
-    }
+    },
   },
   // UPDATE /api/users/:userId
   updateUser: {

@@ -1,5 +1,5 @@
 const User = require('./user.model');
-const bcrypt = require('bcryptjs');
+const EmailValidation = require('../email/email_validation.model');
 const httpStatus = require('http-status');
 const config = require('../../config/config');
 const jwt = require('jsonwebtoken');
@@ -40,18 +40,20 @@ async function create(req, res, next) {
   const user = new User({
     email: req.body.email,
     first_name: req.body.first_name,
-    last_name: req.body.last_name
+    last_name: req.body.last_name,
   });
-  const userValid = await User.getByEmail(req.body.email);
-  if (userValid) {
+  const userValid = await EmailValidation.get(req.body.email);
+  if (userValid != null && req.body.token === userValid.token) {
       user.save()
       .then(savedUser => res.json(savedUser))
       .catch(e => next(e));
+      userValid.used = true;
+      userValid.save();
   } else {
     res
     .status(500)
     .json({
-      message: `El usuario ${req.body.email} ya existe`
+      message: `El usuario ${req.body.email} no ha sido validado`
     });
   }
 }
