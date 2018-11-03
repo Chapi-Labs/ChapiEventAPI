@@ -28,7 +28,6 @@ async function create(req, res, next) {
   event.save()
   .then(savedEvent => res.json(savedEvent))
   .catch(e => next(e));
-
 }
 
 
@@ -36,30 +35,32 @@ async function addEvent(req, res) {
   try {
     const [event, user] = await Promise.all([
       Event.get(req.body.id),
-      User.findOne({ email: req.body.email})
+      User.findOne({ email: req.body.email })
     ]);
     user.events_attended.push(event);
     await user.save();
-    res.json({ valid: true});
+    return res.json({ valid: true });
   } catch (error) {
-    res.json({ valid: false });
+    return res.json({ valid: false });
   }
 }
 
 async function verifyEvent(req, res) {
   try {
-    const user = await User.findOne({ email: req.body.email });
+    const user = await User
+      .findOne({ email: req.body.email })
+      .select('events_attended');
     const index = user.events_attended.findIndex(event => event._id === req.body.event_id);
     const valid = index === -1;
     if (valid) {
-       const event = await Event.get(req.body.event_id);
-       user.events_attended.push(event);
-       await user.save();
-       return res.json({ valid: true });
+      const event = await Event.get(req.body.event_id);
+      user.events_attended.push(event);
+      await user.save();
+      return res.json({ valid: true });
     }
-    res.json({ valid });
+    return res.json({ valid });
   } catch (error) {
-    res.json({ valid: false, error: 'error verificando' });
+    return res.json({ valid: false, error: 'error verificando' });
   }
 }
 
@@ -72,7 +73,7 @@ async function verifyEvent(req, res) {
 async function list(req, res, next) {
   const { limit = 50, skip = 0, day = 1 } = req.query;
   try {
-    const events = await Event.list({limit, skip, day });
+    const events = await Event.list({ limit, skip, day });
     const map = new Map();
     events.forEach((event) => {
       const entry = map.get(event.hour_description);
