@@ -23,7 +23,7 @@ async function addEmail(req, res) {
 
 async function getToken(req, res) {
   try {
-    const emailValidation = await EmailValidation.get(req.body.email);
+    const emailValidation = await EmailValidation.get(req.body.email.trim());
     return res.json({ email: emailValidation.email, token: emailValidation.token });
   } catch (error) {
     console.log(error);

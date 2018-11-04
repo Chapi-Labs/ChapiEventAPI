@@ -20,6 +20,8 @@ const envVarsSchema = Joi.object({
     .description('JWT Secret required to sign'),
   MONGODB_URI: Joi.string().required()
     .description('Mongo DB host url'),
+  SENTRY: Joi.string().required()
+    .description('SENTRY key'),
 }).unknown()
   .required();
 
@@ -34,6 +36,7 @@ const config = {
   mongooseDebug: envVars.MONGOOSE_DEBUG,
   jwtSecret: envVars.JWT_SECRET,
   mongo: envVars.MONGODB_URI,
+  sentry: envVars.SENTRY,
 };
 
 module.exports = config;

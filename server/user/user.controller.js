@@ -43,14 +43,19 @@ async function create(req, res, next) {
   });
   const userValid = await EmailValidation.get(req.body.email.trim());
   if (userValid != null && req.body.token.trim() === userValid.token) {
+    if (userValid.used === true) {
+      return res.status(httpStatus.INTERNAL_SERVER_ERROR)
+        .json({
+          message: `El usuario ${req.body.email} ya ha sido creado.`
+        });
+    }
     user.save()
     .then(savedUser => res.json(savedUser))
     .catch(e => next(e));
     userValid.used = true;
     userValid.save();
   } else {
-    res
-    .status(500)
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR)
     .json({
       message: `El usuario ${req.body.email} no ha sido validado`
     });

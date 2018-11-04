@@ -1,12 +1,15 @@
 const mongoose = require('mongoose');
 const util = require('util');
+const Sentry = require('@sentry/node');
 
 // config should be imported before importing any other file
 const config = require('./config/config');
 const app = require('./config/express');
 
 const debug = require('debug')('express-mongoose-es6-rest-api:index');
-
+Sentry.init({
+  dsn: config.sentry
+});
 // make bluebird default Promise
 Promise = require('bluebird'); // eslint-disable-line no-global-assign
 
