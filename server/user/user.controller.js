@@ -36,19 +36,18 @@ function get(req, res) {
  * @returns {User}
  */
 async function create(req, res, next) {
-
   const user = new User({
     email: req.body.email,
     first_name: req.body.first_name,
     last_name: req.body.last_name,
   });
-  const userValid = await EmailValidation.get(req.body.email);
-  if (userValid != null && req.body.token === userValid.token) {
-      user.save()
-      .then(savedUser => res.json(savedUser))
-      .catch(e => next(e));
-      userValid.used = true;
-      userValid.save();
+  const userValid = await EmailValidation.get(req.body.email.trim());
+  if (userValid != null && req.body.token.trim() === userValid.token) {
+    user.save()
+    .then(savedUser => res.json(savedUser))
+    .catch(e => next(e));
+    userValid.used = true;
+    userValid.save();
   } else {
     res
     .status(500)
@@ -65,19 +64,19 @@ const login = async (req, res) => {
       email: req.body.email.toLowerCase()
     });
     if (user != null) {
-        // create a signed token
-        const token = jwt.sign(
-          {
-            email: user.email,
-            id: user.id
-          },
-          config.jwtSecret,
-          {
-            expiresIn: '30 days'
-          }
-        );
-        return res.json({ token, username: `${user.first_name} ${user.last_name}P`, id: user.id });
-      }
+      // create a signed token
+      const token = jwt.sign(
+        {
+          email: user.email,
+          id: user.id
+        },
+        config.jwtSecret,
+        {
+          expiresIn: '30 days'
+        }
+      );
+      return res.json({ token, username: `${user.first_name} ${user.last_name}P`, id: user.id });
+    }
     // password not valid
     return res.status(httpStatus.INTERNAL_SERVER_ERROR).json(errorMessage);
   } catch (e) {
