@@ -5,7 +5,7 @@ const config = require('../../config/config');
 const jwt = require('jsonwebtoken');
 
 const errorMessage = {
-  message: 'UserNotFoundException',
+  message: 'El usuario no se ha encontrado, debe crear una cuenta.',
   errmsg: 'El usuario o la contraseña no coinciden'
 };
 
