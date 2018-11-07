@@ -60,6 +60,7 @@ async function verifyEvent(req, res) {
     }
     return res.json({ valid });
   } catch (error) {
+    console.log(error);
     return res.json({ valid: false, error: 'error verificando' });
   }
 }
