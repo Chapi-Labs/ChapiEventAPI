@@ -2,6 +2,8 @@ const EmailValidation = require('./email_validation.model');
 const httpStatus = require('http-status');
 const config = require('../../config/config');
 const generate = require('nanoid/generate');
+const postmark = require('postmark');
+const request = require('request');
 
 async function addEmail(req, res) {
   try {
@@ -11,6 +13,16 @@ async function addEmail(req, res) {
       EmailValidation.create({
         email: req.body.email,
         token,
+      });
+      client.sendEmailWithTemplate({
+        'From': 'Chapi Labs<mail@email.chapilabs.com>',
+        'To': req.body.email,
+        'TemplateId': 8862650,
+        'TemplateModel': {
+          'name': '',
+          'codigo': token,
+          'email': req.body.token,
+        },
       });
       return res.json({ message: 'Se ha guardado correctamente el correo', token});
     }

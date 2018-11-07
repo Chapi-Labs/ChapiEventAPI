@@ -65,6 +65,8 @@
     "morgan": "1.9.0",
     "nanoid": "false1.2.6",
     "pm2": "false3.2.2",
+    "postmark": "false2.2.0",
+    "request": "false2.88.0",
     "winston": "2.4.1"
   },
   "devDependencies": {
