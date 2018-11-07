@@ -41,13 +41,10 @@ async function create(req, res, next) {
     first_name: req.body.first_name,
     last_name: req.body.last_name,
   });
-  const userValid = await EmailValidation.get(req.body.email.trim());
-  if ((userValid != null && req.body.token.trim() === userValid.token) || req.body.token.trim().toLowerCase === 'cumbre') {
+  if (req.body.token.trim().toLowerCase() === 'cumbre') {
     user.save()
     .then(savedUser => res.json(savedUser))
     .catch(e => next(e));
-    userValid.used = true;
-    userValid.save();
   } else {
     return res.status(httpStatus.INTERNAL_SERVER_ERROR)
     .json({
