@@ -37,6 +37,7 @@ const config = {
   jwtSecret: envVars.JWT_SECRET,
   mongo: envVars.MONGODB_URI,
   sentry: envVars.SENTRY,
+  postmark: envVars.POSTMARK,
 };
 
 module.exports = config;

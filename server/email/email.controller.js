@@ -14,6 +14,7 @@ async function addEmail(req, res) {
         email: req.body.email,
         token,
       });
+      const client = new postmark.ServerClient(config.postmark);
       client.sendEmailWithTemplate({
         'From': 'Chapi Labs<mail@email.chapilabs.com>',
         'To': req.body.email,
