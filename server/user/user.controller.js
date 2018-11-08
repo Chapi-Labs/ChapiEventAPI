@@ -37,7 +37,7 @@ function get(req, res) {
  */
 async function create(req, res, next) {
   const user = new User({
-    email: req.body.email,
+    email: req.body.email.trim().toLowerCase(),
     first_name: req.body.first_name,
     last_name: req.body.last_name,
   });
